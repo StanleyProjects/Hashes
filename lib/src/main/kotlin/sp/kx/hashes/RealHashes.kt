@@ -2,8 +2,8 @@ package sp.kx.hashes
 
 import java.security.MessageDigest
 
-internal object SHA1HashFunction : HashFunction {
-    private val md = MessageDigest.getInstance("SHA1")
+class RealHashes(algorithm: String) : Hashes {
+    private val md = MessageDigest.getInstance(algorithm)
     override val size = md.digestLength
 
     override fun map(bytes: ByteArray): ByteArray {
