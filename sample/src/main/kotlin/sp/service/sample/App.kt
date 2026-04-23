@@ -22,6 +22,12 @@ fun main() {
     println("str(${str.length}): \"$str\"")
     val encoded = str.toByteArray(Charsets.UTF_8)
     println("encoded(${encoded.size}): ${encoded.hex()}")
-    val sha256 = Hashes.SHA256.digest(encoded = encoded)
-    println("sha256(${sha256.size}): ${sha256.hex()}")
+    Hashes.SHA256.digest(encoded = encoded).also { sha256 ->
+        println("sha256(${sha256.size}): ${sha256.hex()}")
+    }
+    Hashes.SHA256
+        .update(encoded = encoded.copyOf(4))
+        .digest(encoded = encoded.copyOfRange(4, encoded.size)).also { sha256 ->
+            println("sha256(${sha256.size}): ${sha256.hex()}")
+        }
 }
