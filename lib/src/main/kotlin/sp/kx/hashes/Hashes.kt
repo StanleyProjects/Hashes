@@ -19,6 +19,9 @@ class Hashes private constructor(algorithm: String) {
     }
 
     companion object {
+        val MD5 = Hashes(algorithm = "md5")
+        val SHA1 = Hashes(algorithm = "sha1")
         val SHA256 = Hashes(algorithm = "sha256")
+        val SHA512 = Hashes(algorithm = "sha512")
     }
 }
