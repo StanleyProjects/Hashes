@@ -2,7 +2,7 @@ package sp.kx.hashes
 
 import java.security.MessageDigest
 
-class HashesBuilder private constructor(algorithm: String) {
+class HashesBuilder internal constructor(algorithm: String) {
     private val md = MessageDigest.getInstance(algorithm)
 
     fun update(encoded: ByteArray): HashesBuilder {

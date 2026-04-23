@@ -10,6 +10,14 @@ class Hashes private constructor(algorithm: String) {
         return md.digest(encoded)
     }
 
+    fun builder(): HashesBuilder {
+        return HashesBuilder(algorithm = md.algorithm)
+    }
+
+    fun update(encoded: ByteArray): HashesBuilder {
+        return HashesBuilder(algorithm = md.algorithm).update(encoded)
+    }
+
     companion object {
         val SHA256 = Hashes(algorithm = "sha256")
     }
