@@ -1,11 +1,16 @@
 package sp.kx.hashes
 
-interface Hashes {
-    val size: Int
-    fun map(bytes: ByteArray): ByteArray
+import java.security.MessageDigest
+
+class Hashes private constructor(algorithm: String) {
+    private val md = MessageDigest.getInstance(algorithm)
+    val size = md.digestLength
+
+    fun digest(bytes: ByteArray): ByteArray {
+        return md.digest(bytes)
+    }
 
     companion object {
-        val MD5: Hashes = RealHashes(algorithm = "MD5")
-        val SHA1: Hashes = RealHashes(algorithm = "SHA1")
+        val SHA256 = Hashes(algorithm = "sha256")
     }
 }
