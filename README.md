@@ -6,9 +6,10 @@ Classes for working with hash functions.
 
 ## Snapshot
 
-> GitHub [0.1.0-SNAPSHOT](https://github.com/StanleyProjects/Hashes/releases/tag/0.1.0-SNAPSHOT) release
->
-> Maven [metadata](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Hashes/maven-metadata.xml)
+`0.2.1-SNAPSHOT`
+| [GitHub](https://github.com/StanleyProjects/Hashes/releases/tag/0.2.1-SNAPSHOT)
+| [Maven](https://central.sonatype.com/repository/maven-snapshots/com/github/kepocnhh/Hashes/maven-metadata.xml)
+| [Key](https://StanleyProjects.github.io/debug-public.pem)
 
 ### Build
 ```
@@ -22,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.kepocnhh:Hashes:0.1.0-SNAPSHOT")
+    implementation("com.github.kepocnhh:Hashes:0.2.1-SNAPSHOT")
 }
 ```
 
