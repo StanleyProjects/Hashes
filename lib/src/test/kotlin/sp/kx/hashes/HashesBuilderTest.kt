@@ -13,6 +13,20 @@ internal object HashesBuilderTest {
     )
 
     @Test
+    fun builderTest() {
+        val p0 = byteArrayOf(0x00, 0x01, 0x02, 0x03)
+        val p1 = byteArrayOf(0x10, 0x11, 0x12, 0x13)
+        issuers.forEach { (algorithm, hashes) ->
+            val md = MessageDigest.getInstance(algorithm)
+            md.update(p0)
+            md.update(p1)
+            val expected = md.digest()
+            val actual = hashes.builder().update(p0).update(p1).digest()
+            assertTrue(expected.contentEquals(actual))
+        }
+    }
+
+    @Test
     fun digestByteArrayTest() {
         val p0 = byteArrayOf(0x00, 0x01, 0x02, 0x03)
         val p1 = byteArrayOf(0x10, 0x11, 0x12, 0x13)
