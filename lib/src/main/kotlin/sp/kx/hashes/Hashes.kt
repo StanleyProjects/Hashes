@@ -6,17 +6,21 @@ class Hashes private constructor(algorithm: String) {
     private val md = MessageDigest.getInstance(algorithm)
     val size = md.digestLength
 
-    fun digest(encoded: ByteArray): ByteArray = synchronized(this) {
-        md.digest(encoded)
-    }
-
     fun digest(byte: Byte): ByteArray = synchronized(this) {
         md.update(byte)
         md.digest()
     }
 
+    fun digest(encoded: ByteArray): ByteArray = synchronized(this) {
+        md.digest(encoded)
+    }
+
     fun builder(): HashesBuilder {
         return HashesBuilder(algorithm = md.algorithm)
+    }
+
+    fun update(byte: Byte): HashesBuilder {
+        return HashesBuilder(algorithm = md.algorithm).update(byte)
     }
 
     fun update(encoded: ByteArray): HashesBuilder {
