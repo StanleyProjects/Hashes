@@ -1,3 +1,3 @@
 rootProject.name = "Hashes"
 
-include("lib")
+include("lib", "sample")

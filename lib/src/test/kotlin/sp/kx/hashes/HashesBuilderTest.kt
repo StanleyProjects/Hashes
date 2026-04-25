@@ -1,11 +1,10 @@
 package sp.kx.hashes
 
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.security.MessageDigest
 
-internal object HashesTest {
+internal object HashesBuilderTest {
     private val issuers = mapOf(
         "md5" to Hashes.MD5,
         "sha1" to Hashes.SHA1,
@@ -14,43 +13,43 @@ internal object HashesTest {
     )
 
     @Test
-    fun digestByteArrayTest() {
-        val encoded = "foo bar baz".toByteArray(Charsets.UTF_8)
+    fun builderTest() {
+        val p0 = byteArrayOf(0x00, 0x01, 0x02, 0x03)
+        val p1 = byteArrayOf(0x10, 0x11, 0x12, 0x13)
         issuers.forEach { (algorithm, hashes) ->
             val md = MessageDigest.getInstance(algorithm)
-            val expected = md.digest(encoded)
-            val actual = hashes.digest(encoded = encoded)
+            md.update(p0)
+            md.update(p1)
+            val expected = md.digest()
+            val actual = hashes.builder().update(p0).update(p1).digest()
+            assertTrue(expected.contentEquals(actual))
+        }
+    }
+
+    @Test
+    fun digestByteArrayTest() {
+        val p0 = byteArrayOf(0x00, 0x01, 0x02, 0x03)
+        val p1 = byteArrayOf(0x10, 0x11, 0x12, 0x13)
+        issuers.forEach { (algorithm, hashes) ->
+            val md = MessageDigest.getInstance(algorithm)
+            md.update(p0)
+            md.update(p1)
+            val expected = md.digest()
+            val actual = hashes.update(p0).digest(p1)
             assertTrue(expected.contentEquals(actual))
         }
     }
 
     @Test
     fun digestByteTest() {
-        val byte: Byte = 0x42
+        val b0: Byte = 0x00
+        val b1: Byte = 0x10
         issuers.forEach { (algorithm, hashes) ->
             val md = MessageDigest.getInstance(algorithm)
-            md.update(byte)
+            md.update(b0)
+            md.update(b1)
             val expected = md.digest()
-            val actual = hashes.digest(byte = byte)
-            assertTrue(expected.contentEquals(actual))
-        }
-    }
-
-    @Test
-    fun sizeTest() {
-        issuers.forEach { (algorithm, hashes) ->
-            val md = MessageDigest.getInstance(algorithm)
-            assertEquals(md.digestLength, hashes.size)
-        }
-    }
-
-    @Test
-    fun emptyTest() {
-        val encoded = byteArrayOf()
-        issuers.forEach { (algorithm, hashes) ->
-            val md = MessageDigest.getInstance(algorithm)
-            val expected = md.digest(encoded)
-            val actual = hashes.empty
+            val actual = hashes.update(b0).digest(b1)
             assertTrue(expected.contentEquals(actual))
         }
     }
