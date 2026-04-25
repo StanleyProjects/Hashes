@@ -30,4 +30,5 @@ fun main() {
         .digest(encoded = encoded.copyOfRange(4, encoded.size)).also { sha256 ->
             println("sha256(${sha256.size}): ${sha256.hex()}")
         }
+    println("empty: ${Hashes.SHA256.empty.hex()}")
 }

@@ -5,6 +5,7 @@ import java.security.MessageDigest
 class Hashes private constructor(algorithm: String) {
     private val md = MessageDigest.getInstance(algorithm)
     val size = md.digestLength
+    val empty = md.digest()
 
     fun digest(byte: Byte): ByteArray = synchronized(this) {
         md.update(byte)
