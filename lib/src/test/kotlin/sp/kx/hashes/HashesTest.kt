@@ -43,4 +43,15 @@ internal object HashesTest {
             assertEquals(md.digestLength, hashes.size)
         }
     }
+
+    @Test
+    fun emptyTest() {
+        val encoded = byteArrayOf()
+        issuers.forEach { (algorithm, hashes) ->
+            val md = MessageDigest.getInstance(algorithm)
+            val expected = md.digest(encoded)
+            val actual = hashes.empty
+            assertTrue(expected.contentEquals(actual))
+        }
+    }
 }
