@@ -1,5 +1,6 @@
 package sp.kx.hashes
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.security.MessageDigest
@@ -24,7 +25,7 @@ internal object HashesTest {
     }
 
     @Test
-    fun digestTest() {
+    fun digestByteTest() {
         val byte: Byte = 0x42
         issuers.forEach { (algorithm, hashes) ->
             val md = MessageDigest.getInstance(algorithm)
@@ -32,6 +33,14 @@ internal object HashesTest {
             val expected = md.digest()
             val actual = hashes.digest(byte = byte)
             assertTrue(expected.contentEquals(actual))
+        }
+    }
+
+    @Test
+    fun sizeTest() {
+        issuers.forEach { (algorithm, hashes) ->
+            val md = MessageDigest.getInstance(algorithm)
+            assertEquals(md.digestLength, hashes.size)
         }
     }
 }
